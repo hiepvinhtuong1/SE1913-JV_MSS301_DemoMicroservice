@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Orchid Store Microservices Demo
 
 Demo for Chapter 02: a simple orchid store built with three Spring Boot microservices.
@@ -76,3 +77,6 @@ List orders:
 ```powershell
 Invoke-RestMethod http://localhost:8080/api/orders
 ```
+=======
+# SE1913-JV_MSS301_DemoMicroservice
+>>>>>>> 28779bf931367ad175fe74f0e4141f31e8e53b0c
