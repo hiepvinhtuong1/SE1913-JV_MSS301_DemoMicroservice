@@ -7,9 +7,10 @@ Demo for Chapter 03: a simple orchid store built with Spring Boot microservices,
 | Service | Port | Responsibility |
 | --- | --- | --- |
 | EurekaServer | 9001 | Service registry for microservices |
+| ApiGateway | 8080 | Single entry point for client requests and aggregated Swagger UI |
 | AccountService | 8081 | Manages accounts and roles |
 | OrchidService | 8082 | Manages orchid catalog and categories |
-| OrderService | 8080 | Creates and lists orders, using OpenFeign to call services discovered through Eureka |
+| OrderService | 8083 | Creates and lists orders, using OpenFeign to call services discovered through Eureka |
 
 ## Databases
 
@@ -80,6 +81,7 @@ mvn spring-boot:run -pl eureka-server
 mvn spring-boot:run -pl account-service
 mvn spring-boot:run -pl orchid-service
 mvn spring-boot:run -pl order-service
+mvn spring-boot:run -pl api-gateway
 ```
 
 Open the Eureka dashboard:
@@ -95,17 +97,26 @@ Invoke-RestMethod http://localhost:8081/api/accounts/1
 Invoke-RestMethod http://localhost:8082/api/orchids/1
 ```
 
+Call services through the API Gateway:
+
+```powershell
+Invoke-RestMethod http://localhost:8080/api/accounts/1
+Invoke-RestMethod http://localhost:8080/api/orchids/1
+Invoke-RestMethod http://localhost:8080/api/orders
+```
+
 ## Swagger UI
 
 Open each service's Swagger UI after the service starts:
 
 ```text
+Gateway:        http://localhost:8080/swagger-ui/index.html
 AccountService: http://localhost:8081/swagger-ui/index.html
 OrchidService:  http://localhost:8082/swagger-ui/index.html
-OrderService:   http://localhost:8080/swagger-ui/index.html
+OrderService:   http://localhost:8083/swagger-ui/index.html
 ```
 
-OpenAPI JSON is available at `/v3/api-docs` for each service.
+OpenAPI JSON is available at `/v3/api-docs` for each service. Through the gateway, the aggregated service definitions are available at `/account-service/v3/api-docs`, `/orchid-service/v3/api-docs`, and `/order-service/v3/api-docs`.
 
 Create an order:
 
